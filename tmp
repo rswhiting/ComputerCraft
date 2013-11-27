@@ -1,0 +1,12 @@
+turtle.refuel()
+
+while true do
+  turtle.up()
+  turtle.up()
+  turtle.forward()
+  turtle.forward()
+  turtle.down()
+  turtle.down()
+  turtle.turnRight()
+  turtle.turnRight()
+end
