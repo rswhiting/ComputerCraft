@@ -1,0 +1,57 @@
+-- dig out an area starting from the bottom left
+os.loadAPI("location")
+os.loadAPI("pack")
+
+local maxHeight
+local maxWidth
+local maxDepth
+local start
+
+function init()
+	print("Dig height: ")
+	maxHeight = tonumber(io.read())
+	print("Dig width: ")
+	maxWidth = tonumber(io.read())
+	print("Dig depth: ")
+	maxDepth = tonumber(io.read())
+    start = location.where()
+end
+
+function dig()
+    local goingUp = true
+    for d=1,maxDepth-1 do
+        turtle.dig()
+        turtle.suck()
+        location.f(1)
+        for h=1,maxHeight-1 do
+            if h % 2 == 0 then
+                location.l()
+            else
+                location.r()
+            end
+            for w=1,maxWidth-1 do
+                turtle.dig()
+                turtle.suck()
+                turtle.f(1)
+            end
+            if h % 2 == 0 then
+                location.r()
+            else
+                location.l()
+            end
+            if goingUp then
+                turtle.digUp()
+                turtle.suckUp()
+                location.u(1)
+            else
+                turtle.digDown()
+                turtle.suckDown()
+                location.d(1)
+            end
+        end
+        goingUp = !goingUp
+    end
+end
+
+init()
+dig()

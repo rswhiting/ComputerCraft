@@ -1,0 +1,192 @@
+-- builds a pillar
+-- takes the following supplies
+-- torch    4
+-- stair    80 (62,18)
+-- stone    152 (62,62,28)
+os.loadAPI("location")
+os.loadAPI("pack")
+
+local height = 5
+local torchheight = 3
+
+function init()
+	pack.define("torch",{1})
+	pack.define("stair",{2,3,4})
+	pack.define("stone",{5,6,7,8,9,10,11,12,13,14,15,16})
+end
+
+function buildPillar()
+	buildSide()
+	buildInside()
+	buildSide()
+	buildTop()
+    placeTorches()
+	buildBase()
+end
+
+function buildSide()
+	location.r()
+	for i=1, height-1 do
+		pack.select("stone")
+		turtle.place()
+		location.t()
+		pack.select("stone")
+		turtle.place()
+		location.u(1)
+		pack.select("stone")
+		turtle.placeDown()
+		location.t()
+	end
+	pack.select("stone")
+	turtle.place()
+	location.t()
+	pack.select("stone")
+	turtle.place()
+	location.r()
+	location.f(1)
+	location.t()
+	pack.select("stone")
+	turtle.place()
+
+end
+
+function buildInside()
+	location.r()
+	for i=1, height-1 do
+		pack.select("stone")
+		turtle.place()
+		location.t()
+		pack.select("stone")
+		turtle.place()
+		location.d(1)
+	end
+	pack.select("stone")
+	turtle.place()
+	location.t()
+	pack.select("stone")
+	turtle.place()
+	location.r()
+	if(turtle.detect()) then
+		location.t()
+	end
+	location.f(1)
+end
+
+function buildTop()
+    -- get into position
+    location.t()
+    location.f(1)
+    location.r()
+    location.f(2)
+    location.r()
+    for i=1,4 do
+        endSide1()
+        endCorner1()
+    end
+    -- move to part 2
+    location.r()
+    location.f(2)
+    location.l()
+    location.d(1)
+    location.f(1)
+    for i=1,4 do
+        endSide2()
+        endCorner2()
+    end
+end
+
+function buildBase()
+    -- get into position
+    location.d(torchHeight)
+    location.l()
+    location.f(2)
+    location.r()
+    for i=1,4 do
+        endSide1()
+        endCorner1()
+    end
+    -- move to part 2
+    location.r()
+    location.f(2)
+    location.l()
+    location.u(1)
+    location.f(1)
+    for i=1,4 do
+        endSide2()
+        endCorner2()
+    end
+end
+
+function endSide1()
+    for i=1,4 do
+        pack.select("stone")
+        turtle.place()
+        location.b(1)
+        pack.select("stair")
+        turtle.place()
+        location.r()
+        location.f(1)
+        location.l()
+        location.f(1)
+    end
+    location.b(1)
+    pack.select("stair")
+    turtle.place()
+end
+
+function endCorner1()
+    location.r()
+    location.f(2)
+    location.l()
+    location.f(1)
+    location.l()
+    pack.select("stair")
+    turtle.place()
+    location.r()
+    location.f(1)
+    location.l()
+    location.f(1)
+end
+
+function endSide2()
+    for i=1,3 do
+        pack.select("stair")
+        turtle.place()
+        location.r()
+        location.f(1)
+        location.l()
+        location.f(1)
+    end
+end
+
+function endCorner2()
+    location.r()
+    location.f(2)
+    location.l()
+    location.f(1)
+    location.l()
+    pack.select("stair")
+    turtle.place()
+    location.r()
+    location.f(1)
+    location.l()
+end
+
+function placeTorches()
+    location.r()
+    location.f(2)
+    location.l()
+    location.d(height - torchHeight - 2)
+    for i=0,4 do
+        pack.select("torch")
+        turtle.place()
+        location.r()
+        location.f(3)
+        location.l()
+        location.f(3)
+        location.l()
+    end
+end
+
+init()
+buildPillar()

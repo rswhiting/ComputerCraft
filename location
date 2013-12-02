@@ -1,0 +1,128 @@
+-- location api/object for keeping track of x,y,z,&o without
+-- the use of gps
+-- include with os.loadAPI("location")
+
+
+x = 0
+y = 0
+z = 0
+o = 0
+local home
+
+function init()
+	term.clear()
+    print("Set location? (y/n)")
+    local setOption = io.read()
+    if(setOption == 'y' or setOption == 'Y') then
+        print("Initializing turtle location")
+        print("x: ")
+        x = tonumber(io.read())
+        print("y: ")
+        y = tonumber(io.read())
+        print("z: ")
+        z = tonumber(io.read())
+        print("orientation  (n,s,e,w): ")
+        oStr = io.read()
+        -- according to http://minecraft.gamepedia.com/Tutorials/Navigation
+        if(oStr == "n" or oStr == "N") then
+            o = 2
+        elseif (oStr == 'e' or oStr == 'E') then
+            o = 3
+        elseif (oStr == 's' or oStr == 'S') then
+            o = 0
+        else
+            o = 1
+        end
+    else
+        x = 0
+        y = 0
+        z = 0
+        o = 2 -- North
+    end
+	home = {x,y,z,o}
+	print("Great, the turtle is ready for action")	
+end
+
+function f(n)
+	for i = 1, n do
+		if(turtle.forward()) then
+			if o == 0 then
+				z = z + 1
+			elseif o == 1 then
+				x = x - 1
+			elseif o == 2 then
+				z = z - 1
+			elseif o == 3 then
+				x = x + 1
+			end
+		else
+			return false
+		end
+	end
+	return true
+end
+
+function b(n)
+	for i = 1, n do
+		if(turtle.back()) then
+			if o == 0 then
+				z = z - 1
+			elseif o == 1 then
+				x = x + 1
+			elseif o == 2 then
+				z = z + 1
+			elseif o == 3 then
+				x = x - 1
+			end
+		else
+			return false
+		end
+	end
+	return true
+end
+
+function u(n)
+	for i = 1, n do
+		if(turtle.up()) then
+			y = y + 1
+		else
+			return false
+		end
+	end
+	return true
+end
+
+function d(n)
+	for i = 1, n do
+		if(turtle.down()) then
+			y = y - 1
+		else
+			return false
+		end
+	end
+	return true
+end
+
+function r()
+	o = (o + 1) % 4
+	turtle.turnRight()
+end
+
+function l()
+	o = (o + 4 - 1) % 4
+	turtle.turnLeft()
+end
+
+function t()
+	o = (o + 2) % 4
+	turtle.turnRight()
+	turtle.turnRight()
+end
+
+function where()
+	print("I'm at " .. x .. ", " .. y .. ", " .. z .. " " .. o)
+	return {x,y,z,o}
+end
+
+init()
+
