@@ -5,7 +5,6 @@ os.loadAPI("pack")
 local maxHeight
 local maxWidth
 local maxDepth
-local start
 
 function init()
 	print("Dig height: ")
@@ -14,42 +13,79 @@ function init()
 	maxWidth = tonumber(io.read())
 	print("Dig depth: ")
 	maxDepth = tonumber(io.read())
-    start = location.where()
+--    print("Where is the store?")
+--    print("x: ")
+--    local x = tonumber(io.read())
+--    print("y: ")
+--    local y = tonumber(io.read())
+--    print("z: ")
+--    local z = tonumber(io.read())
+--    print("orientation  (n,s,e,w): ")
+--    oStr = io.read()
+--    local o = location.getOrientationFromStr(oStr)
+--    location.place["store"] = {x=x,y=y,z=z,o=o}
 end
 
 function dig()
+    print("Here we go!")
     local goingUp = true
-    for d=1,maxDepth-1 do
+    for d=1,maxDepth do
         turtle.dig()
         turtle.suck()
         location.f(1)
-        for h=1,maxHeight-1 do
+        for h=1,maxHeight do
             if h % 2 == 0 then
-                location.l()
+                if goingUp then
+                    location.l()
+                else
+                    location.r()
+                end
             else
-                location.r()
+                if goingUp then
+                    location.r()
+                else
+                    location.l()
+                end
             end
             for w=1,maxWidth-1 do
                 turtle.dig()
                 turtle.suck()
-                turtle.f(1)
+                if(pack.emptyCount() == 0) then
+                    local here = location.where()
+                    location.goto("store")
+                    pack.dropAll()
+                    location.goto(here)
+                end
+                location.f(1)
             end
             if h % 2 == 0 then
-                location.r()
+                if goingUp then
+                    location.r()
+                else
+                    location.l()
+                end
             else
-                location.l()
+                if goingUp then
+                    location.l()
+                else
+                    location.r()
+                end
             end
-            if goingUp then
-                turtle.digUp()
-                turtle.suckUp()
-                location.u(1)
+            if h == maxHeight then
+                print("at the top!")
             else
-                turtle.digDown()
-                turtle.suckDown()
-                location.d(1)
+                if goingUp then
+                    turtle.digUp()
+                    turtle.suckUp()
+                    location.u(1)
+                else
+                    turtle.digDown()
+                    turtle.suckDown()
+                    location.d(1)
+                end
             end
         end
-        goingUp = !goingUp
+        goingUp = not goingUp
     end
 end
 

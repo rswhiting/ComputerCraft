@@ -18,6 +18,38 @@ function remaining(name)
 	end
 end
 
+function emptyCount()
+    local empty = 0
+    for i=1,16 do
+        if turtle.getItemCount(i) == 0 then
+            empty = empty + 1
+        end
+    end
+    return empty
+end
+
+function drop(name)
+	if(packMap[name]) then
+--		local count = 0
+		for i = 1, #(packMap[name]) do
+            turtle.select(packMap[name][i])
+            turtle.drop()
+		end
+--		return count
+--	else
+--		return 0
+	end
+end
+
+function dropAll()
+--    local count = 0
+    for i=1,16 do
+        turtle.select(i)
+        turtle.drop()
+    end
+--    return count
+end
+
 function select(name)
 	if(packMap[name]) then
 		if(remaining(name)) then

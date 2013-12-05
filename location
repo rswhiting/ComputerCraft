@@ -7,7 +7,7 @@ x = 0
 y = 0
 z = 0
 o = 0
-local home
+place = {}
 
 function init()
 	term.clear()
@@ -23,23 +23,15 @@ function init()
         z = tonumber(io.read())
         print("orientation  (n,s,e,w): ")
         oStr = io.read()
-        -- according to http://minecraft.gamepedia.com/Tutorials/Navigation
-        if(oStr == "n" or oStr == "N") then
-            o = 2
-        elseif (oStr == 'e' or oStr == 'E') then
-            o = 3
-        elseif (oStr == 's' or oStr == 'S') then
-            o = 0
-        else
-            o = 1
-        end
+        o = getOrientationFromStr(oStr)
     else
         x = 0
         y = 0
         z = 0
         o = 2 -- North
     end
-	home = {x,y,z,o}
+	place["home"] = {x=x,y=y,z=z,o=o}
+ place["store"] = {x=-167,y=10,z=320,o=1}
 	print("Great, the turtle is ready for action")	
 end
 
@@ -119,9 +111,79 @@ function t()
 	turtle.turnRight()
 end
 
+-- according to http://minecraft.gamepedia.com/Tutorials/Navigation
+function getOrientationFromStr(str)
+    if(oStr == 'n' or oStr == 'N') then
+        return 2
+    elseif (oStr == 'e' or oStr == 'E') then
+        return 3
+    elseif (oStr == 's' or oStr == 'S') then
+        return 0
+    else
+        return 1
+    end
+end
+
+function p(oTarget)
+    local turn = (o + 4 - oTarget) % 4
+    if turn == 0 then
+        -- already there
+    elseif turn == 1 then
+        l()
+    elseif turn == 2 then
+        t()
+    else
+        r()
+    end
+end
+
 function where()
 	print("I'm at " .. x .. ", " .. y .. ", " .. z .. " " .. o)
-	return {x,y,z,o}
+	return {x=x,y=y,z=z,o=o}
+end
+
+function goto(placeWrapper)
+    local target
+    if(type(placeWrapper) == "string") then
+        target = place[placeWrapper]
+    else
+        target = placeWrapper
+    end
+    local xTarget = target.x
+    local yTarget = target.y
+    local zTarget = target.z
+    local oTarget = target.o
+    while (x ~= xTarget or y ~= yTarget or z ~= zTarget) do
+        -- x axis W-E
+        if x < xTarget then
+            p(3)
+            f(1)
+        elseif x > xTarget then
+            p(1)
+            f(1)
+        end
+        -- z axis N-S
+        if z < zTarget then
+            p(0)
+            f(1)
+        elseif z > zTarget then
+            p(2)
+            f(1)
+        end
+        -- y axis D-U
+        if y < yTarget then
+            u(1)
+        elseif y > yTarget then
+            d(1)
+        end
+    end
+    p(oTarget)
+    print("Arrived after goto")
+    where()
+end
+
+function goHome()
+    goto("home")
 end
 
 init()
