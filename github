@@ -29,9 +29,9 @@ end
 
 -- GET the contents from github
 write( "Connecting to github.com... " )
-local response = http.get(
-    "http://raw.github.com/"..sUser.."/"..sRepo.."/master/"..sSource
-    )
+local request = "https://raw.github.com/"..sUser.."/"..sRepo.."/master/"..sSource
+print("requesting "..request)
+local response = http.get(request)
     
 if response then
     print( "Success." )
