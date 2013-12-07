@@ -11,7 +11,7 @@ pastebin get jCQg9nEq github
 Then you can pull down programs from github like this: 
 ```
 --github USER REPO SOURCE DEST 
-github rswhiting ComputerCraft location.lua location
+github rswhiting ComputerCraft update update
 ```
 
 For more info on how the other programs work check out the wiki:
