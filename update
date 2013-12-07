@@ -9,12 +9,12 @@ local files = {
 print("Updating files from github")
 -- remove existing files
 print("Deleting "..table.getn(files).." files")
-for file in list_iter(files) do
+for i,file in ipairs(files) do
     shell.run("delete", file)
 end
 
 -- get them from github
-for file in list_iter(files) do
+for i,file in ipairs(files) do
     shell.run("github", "rswhiting", "ComputerCraft", file, file)
 end
 
