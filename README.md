@@ -5,7 +5,7 @@ Programs for my ComputerCraft turtles
 
 First, grab the github program for your computer by running this on your cc computer: 
 ```
-pastebin get up8hUksL github
+pastebin get jCQg9nEq github
 ```
 
 Then you can pull down programs from github like this: 
