@@ -7,12 +7,12 @@ local maxWidth
 local maxDepth
 
 function init()
-	print("Dig height: ")
-	maxHeight = tonumber(io.read())
-	print("Dig width: ")
-	maxWidth = tonumber(io.read())
-	print("Dig depth: ")
+	print("Dig x: ")
 	maxDepth = tonumber(io.read())
+	print("Dig y: ")
+	maxHeight = tonumber(io.read())
+	print("Dig z: ")
+	maxWidth = tonumber(io.read())
 --    print("Where is the store?")
 --    print("x: ")
 --    local x = tonumber(io.read())
@@ -29,12 +29,17 @@ end
 function dig()
     print("Here we go!")
     local goingUp = true
-    for d=1,maxDepth do
+    local home = location.place["home"]
+    while location.x < home.x + maxDepth do
+    --for d=1,maxDepth do
         turtle.dig()
         turtle.suck()
         location.f(1)
-        for h=1,maxHeight do
-            if h % 2 == 0 then
+        local evenRow = true
+        while location.y < home.y + maxHeight do
+        --for h=1,maxHeight do
+            if evenRow then
+            --if h % 2 == 0 then
                 if goingUp then
                     location.l()
                 else
@@ -47,7 +52,8 @@ function dig()
                     location.l()
                 end
             end
-            for w=1,maxWidth-1 do
+            while location.z < home.z + maxWidth do
+            --for w=1,maxWidth-1 do
                 turtle.dig()
                 turtle.suck()
                 if(pack.emptyCount() == 0) then
@@ -58,7 +64,8 @@ function dig()
                 end
                 location.f(1)
             end
-            if h % 2 == 0 then
+            if evenRow then
+            --if h % 2 == 0 then
                 if goingUp then
                     location.r()
                 else
@@ -84,6 +91,7 @@ function dig()
                     location.d(1)
                 end
             end
+            evenRow = not evenRow
         end
         goingUp = not goingUp
     end
