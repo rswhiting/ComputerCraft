@@ -1,0 +1,22 @@
+-- updates files from github
+local files = {
+    "location",
+    "pack",
+    "dig",
+    "buildPillar"
+}
+
+print("Updating files from github")
+-- remove existing files
+print("Deleting "..table.getn(files).." files")
+for file in list_iter(files) do
+    shell.run("delete", file)
+end
+
+-- get them from github
+for file in list_iter(files) do
+    shell.run("github", "rswhiting", "ComputerCraft", file, file)
+end
+
+print("Update complete")
+
