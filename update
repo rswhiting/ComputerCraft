@@ -10,12 +10,12 @@ print("Updating files from github")
 -- remove existing files
 print("Deleting "..table.getn(files).." files")
 for file in list_iter(files) do
-    delete file
+    shell.run("delete", file)
 end
 
 -- get them from github
 for file in list_iter(files) do
-    github rswhiting ComputerCraft file file
+    shell.run("github", "rswhiting", "ComputerCraft", file, file)
 end
 
 print("Update complete")
