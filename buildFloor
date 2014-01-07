@@ -43,21 +43,21 @@ end
 function floor()
     print("Here we go!")
     while true do
-        print(location.x % 4)
+        -- hit a wall
+        if(turtle.detect()) then
+            var orient = location.where().o
+            location.t()
+            location.f(4) -- max wall difference
+            location.p(1) -- go "west" from start
+            location.f(1)
+            location.p(orient)
+            location.f(9)
+            location.t()
+        end
         if(location.where().x % 4 == 0 and location.where().z % 4 == 0) then
             placeLight()
         else
             placeStone()
-        end
-        -- hit a wall
-        if(turtle.detect()) then
-            location.t()
-            location.f(4) -- max wall difference
-            location.r()
-            location.f(1)
-            location.r()
-            location.f(9)
-            location.t()
         end
     end
 end
