@@ -43,7 +43,8 @@ end
 function floor()
     print("Here we go!")
     while true do
-        if(location.x % 4 == 0 and location.z % 4 == 0) then
+        print(location.x % 4)
+        if(location.where().x % 4 == 0 and location.where().z % 4 == 0) then
             placeLight()
         else
             placeStone()
