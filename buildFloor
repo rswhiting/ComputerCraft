@@ -12,18 +12,18 @@ end
 function placeLight()
     pack.select("glass")
     turtle.placeDown()
-    location.u()
+    location.u(1)
     pack.select("torch")
     turtle.placeDown()
-    location.f()
-    location.d()
+    location.f(1)
+    location.d(1)
     checkSupply()
 end
 
 function placeStone()
     pack.select("stone")
     turtle.placeDown()
-    location.f()
+    location.f(1)
     checkSupply()
 end
 
@@ -53,7 +53,7 @@ function floor()
             location.t()
             location.f(4) -- max wall difference
             location.r()
-            location.f()
+            location.f(1)
             location.r()
             location.f(9)
             location.t()
