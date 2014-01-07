@@ -3,7 +3,8 @@ local files = {
     "location",
     "pack",
     "dig",
-    "buildPillar"
+    "buildPillar",
+    "buildFloor"
 }
 
 print("Updating files from github")
