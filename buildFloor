@@ -1,0 +1,65 @@
+-- build a floor in Jason's tower
+os.loadAPI("location")
+os.loadAPI("pack")
+
+function init()
+--    location.place["store"] = {x=x,y=y,z=z,o=o}
+    pack.define("glass",{1,2})
+    pack.define("torch",{3,4})
+    pack.define("stone",{5,6,7,8,9,10,11,12,13,14,15,16})
+end
+
+function placeLight()
+    pack.select("glass")
+    turtle.placeDown()
+    location.u()
+    pack.select("torch")
+    turtle.placeDown()
+    location.f()
+    location.d()
+    checkSupply()
+end
+
+function placeStone()
+    pack.select("stone")
+    turtle.placeDown()
+    location.f()
+    checkSupply()
+end
+
+function checkSupply()
+    if(pack.remaining("stone") < 2 or
+        pack.remaining("torch") < 2 or
+        pack.remaining("glass") < 2) then
+        local here = location.where()
+        location.goto("home")
+        -- resupply?
+        print("I need supplies! (enter when done)")
+        io.read()
+        location.goto(here)
+    end
+end
+
+function floor()
+    print("Here we go!")
+    while true do
+        if(location.x % 4 == 0 and location.z % 4 == 0) then
+            placeLight()
+        else
+            placeStone()
+        end
+        -- hit a wall
+        if(turtle.detect()) then
+            location.t()
+            location.f(4) -- max wall difference
+            location.r()
+            location.f()
+            location.r()
+            location.f(9)
+            location.t()
+        end
+    end
+end
+
+init()
+floor()
