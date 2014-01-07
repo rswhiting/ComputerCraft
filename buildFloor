@@ -45,7 +45,7 @@ function floor()
     while true do
         -- hit a wall
         if(turtle.detect()) then
-            var orient = location.where().o
+            local orient = location.where().o
             location.t()
             location.f(4) -- max wall difference
             location.p(1) -- go "west" from start
