@@ -45,6 +45,7 @@ function floor()
     while true do
         -- hit a wall
         if(turtle.detect()) then
+            placeStone()
             local orient = location.where().o
             location.t()
             location.f(4) -- max wall difference
