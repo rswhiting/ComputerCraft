@@ -46,11 +46,13 @@ function floor()
             placeStone()
             local orient = location.where().o
             location.t()
+            location.u(1)
             location.f(4) -- max wall difference
             location.p(1) -- go "west" from start
             location.f(1)
             location.p(orient)
             location.f(9)
+            location.d(1)
             location.t()
         end
         if(location.where().x % 4 == 0 and location.where().z % 4 == 0) then
