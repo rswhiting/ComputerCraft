@@ -8,10 +8,11 @@ end
 function fillBucket()
     pack.select("empty")
     turtle.transferTo(1,1)
-    pack.select("empty")
+    pack.select("full")
     turtle.place()
     turtle.dropUp(1)
     checkSupply()
+    sleep(0.2)
 end
 
 function checkSupply()
