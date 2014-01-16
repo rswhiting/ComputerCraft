@@ -1,0 +1,31 @@
+os.loadAPI("pack")
+
+function init()
+    pack.define("full",{1})
+    pack.define("empty",{2,3,4,5,6,7,8,9,10,11,12,13,14,15,16})
+end
+
+function fillBucket()
+    pack.select("empty")
+    turtle.transfterTo(1,1)
+    pack.select("empty")
+    turtle.place()
+    turtle.dropUp(1)
+    checkSupply()
+end
+
+function checkSupply()
+    if(pack.remaining("empty") < 1) then 
+        print("I need supplies! (enter when done)")
+        io.read()
+    end
+end
+
+function go()
+    while true do
+        fillBucket()
+    end
+end
+
+init()
+go()
