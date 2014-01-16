@@ -4,7 +4,8 @@ local files = {
     "pack",
     "dig",
     "buildPillar",
-    "buildFloor"
+    "buildFloor",
+    "bucketWater"
 }
 
 print("Updating files from github")
