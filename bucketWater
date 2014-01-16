@@ -7,7 +7,7 @@ end
 
 function fillBucket()
     pack.select("empty")
-    turtle.transfterTo(1,1)
+    turtle.transferTo(1,1)
     pack.select("empty")
     turtle.place()
     turtle.dropUp(1)
