@@ -1,0 +1,80 @@
+-- build a train track
+os.loadAPI("location")
+os.loadAPI("pack")
+
+function init()
+    pack.define("stair",{1,2,3})
+    pack.define("rail",{4,5,6,7})
+    pack.define("stone",{8,9,10,11,12,13,14,15,16})
+end
+
+function placeBridge(){
+    turtle.digUp();
+    turtle.digDown();
+    pack.select("stone");
+    turtle.placeDown();
+    pack.select("rail");
+    turtle.placeDown();
+    turtle.dig();
+    location.f(1);
+}
+
+
+
+
+function placeLight()
+    pack.select("glass")
+    turtle.placeDown()
+    location.u(1)
+    pack.select("torch")
+    turtle.placeDown()
+    location.f(1)
+    location.d(1)
+    checkSupply()
+end
+
+function placeStone()
+    pack.select("stone")
+    turtle.placeDown()
+    location.f(1)
+    checkSupply()
+end
+
+function checkSupply()
+    if(pack.remaining("stone") < 2 or
+        pack.remaining("torch") < 2 or
+        pack.remaining("glass") < 2) then
+        local here = location.where()
+        -- resupply?
+        print("I need supplies! (enter when done)")
+        io.read()
+    end
+end
+
+function floor()
+    print("Here we go!")
+    while true do
+        -- hit a wall
+        if(turtle.detect()) then
+            placeStone()
+            local orient = location.where().o
+            location.t()
+            location.u(1)
+            location.f(4) -- max wall difference
+            location.p(1) -- go "west" from start
+            location.f(1)
+            location.p(orient)
+            location.f(9)
+            location.d(1)
+            location.t()
+        end
+        if(location.where().x % 4 == 0 and location.where().z % 4 == 0) then
+            placeLight()
+        else
+            placeStone()
+        end
+    end
+end
+
+init()
+floor()
