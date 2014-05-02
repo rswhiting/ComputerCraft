@@ -30,13 +30,13 @@ function dig()
     print("Here we go!")
     local goingUp = true
     local home = location.place["home"]
-    while location.x < home.x + maxDepth do
+    while location.x <= home.x + maxDepth and location.x >= home.x do
     --for d=1,maxDepth do
         turtle.dig()
         turtle.suck()
         location.f(1)
-        local evenRow = true
-        while location.y < home.y + maxHeight do
+        local evenRow = false
+        while location.y <= home.y + maxHeight and location.y >= home.y do
         --for h=1,maxHeight do
             if evenRow then
             --if h % 2 == 0 then
@@ -52,7 +52,7 @@ function dig()
                     location.l()
                 end
             end
-            while location.z < home.z + maxWidth do
+            while location.z <= home.z + maxWidth and location.z >= home.z do
             --for w=1,maxWidth-1 do
                 turtle.dig()
                 turtle.suck()
@@ -62,7 +62,11 @@ function dig()
                     pack.dropAll()
                     location.goto(here)
                 end
+                if(location.moves > 5) then
+                    location.goto("home")
+                end
                 location.f(1)
+                where()
             end
             if evenRow then
             --if h % 2 == 0 then
@@ -92,8 +96,10 @@ function dig()
                 end
             end
             evenRow = not evenRow
+            where()
         end
         goingUp = not goingUp
+        where()
     end
 end
 

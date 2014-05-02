@@ -2,7 +2,7 @@
 -- the use of gps
 -- include with os.loadAPI("location")
 
-
+moves = 0
 x = 0
 y = 0
 z = 0
@@ -31,7 +31,8 @@ function init()
         o = 2 -- North
     end
 	place["home"] = {x=x,y=y,z=z,o=o}
- place["store"] = {x=-167,y=10,z=320,o=1}
+    place["store"] = {x=-167,y=10,z=320,o=1}
+    moves = 0
 	print("Great, the turtle is ready for action")	
 end
 
@@ -51,6 +52,7 @@ function f(n)
 			return false
 		end
 	end
+    moves = moves + 1
 	return true
 end
 
@@ -70,6 +72,7 @@ function b(n)
 			return false
 		end
 	end
+    moves = moves + 1
 	return true
 end
 
@@ -81,6 +84,7 @@ function u(n)
 			return false
 		end
 	end
+    moves = moves + 1
 	return true
 end
 
@@ -92,6 +96,7 @@ function d(n)
 			return false
 		end
 	end
+    moves = moves + 1
 	return true
 end
 
@@ -187,4 +192,3 @@ function goHome()
 end
 
 init()
-
