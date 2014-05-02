@@ -2,79 +2,129 @@
 os.loadAPI("location")
 os.loadAPI("pack")
 
+height = 12
+
 function init()
     pack.define("stair",{1,2,3})
     pack.define("rail",{4,5,6,7})
     pack.define("stone",{8,9,10,11,12,13,14,15,16})
 end
 
-function placeBridge(){
-    turtle.digUp();
+function placeBridge()
     turtle.digDown();
     pack.select("stone");
     turtle.placeDown();
+    while turtle.detectUp() do
+        turtle.digUp();
+    end
+    location.u(1);
     pack.select("rail");
     turtle.placeDown();
-    turtle.dig();
+    location.d(1);
+    while turtle.detect() do
+        turtle.dig();
+    end
     location.f(1);
-}
-
-
-
-
-function placeLight()
-    pack.select("glass")
-    turtle.placeDown()
-    location.u(1)
-    pack.select("torch")
-    turtle.placeDown()
-    location.f(1)
-    location.d(1)
-    checkSupply()
 end
 
-function placeStone()
-    pack.select("stone")
-    turtle.placeDown()
-    location.f(1)
-    checkSupply()
+function digOutArea()
+    turtle.digDown();
+    for i=0,3 do
+        location.d(1);
+        turtle.digDown();
+    end
+    for i=0,5 do
+        while turtle.detect() do
+            turtle.dig();
+        end
+        location.f(1);
+        while turtle.detectUp() do
+            turtle.digUp();
+        end
+        turtle.digDown();
+    end
+end
+
+function placeCap()
+    -- first layer of the cap
+    location.t(); -- turn to face start
+    pack.select("stair");
+    turtle.placeUp();
+    for i=0,3 do
+        location.f(1);
+        pack.select("stone");
+        turtle.placeUp();
+    end
+    location.f(1);
+    location.t(); -- face forward again
+    pack.select("stair");
+    turtle.placeUp();
+
+    -- second layer of the cap
+    location.d(1);
+    location.f(1);
+    pack.select("stair");
+    turtle.placeUp();
+    location.f(1);
+    pack.select("stone");
+    turtle.placeUp();
+    location.f(1);
+    location.t(); -- turn to face start
+    pack.select("stair");
+    turtle.placeUp();
+    location.f();
+end
+
+function placePillar()
+    for i=0,(height-4) do 
+        turtle.digDown();
+        location.d(1);
+    end
+    for i=0,(height-4) do
+        location.u(1);
+        pack.select("stone");
+        turtle.placeDown();
+    end
+end
+
+function finish()
+    location.f(1);
+    location.t();
+    pack.select("stone");
+    turtle.place();
+    location.b(2);
+    location.u(4);
+end
+
+function buildOne()
+    for i=0,2 do
+        placeBridge();
+    end
+    digOutArea();
+    placeCap();
+    placePillar();
+    finish();
+    for i=0,6 do
+        placeBridge();
+    end
 end
 
 function checkSupply()
-    if(pack.remaining("stone") < 2 or
-        pack.remaining("torch") < 2 or
-        pack.remaining("glass") < 2) then
+    if(pack.remaining("stone") < (12 + height - 3) or
+        pack.remaining("stair") < 8 or
+        pack.remaining("rail") < 4) then
         local here = location.where()
-        -- resupply?
         print("I need supplies! (enter when done)")
         io.read()
     end
 end
 
-function floor()
-    print("Here we go!")
+function build()
     while true do
-        -- hit a wall
-        if(turtle.detect()) then
-            placeStone()
-            local orient = location.where().o
-            location.t()
-            location.u(1)
-            location.f(4) -- max wall difference
-            location.p(1) -- go "west" from start
-            location.f(1)
-            location.p(orient)
-            location.f(9)
-            location.d(1)
-            location.t()
-        end
-        if(location.where().x % 4 == 0 and location.where().z % 4 == 0) then
-            placeLight()
-        else
-            placeStone()
-        end
+        checkSupply();
+        buildOne();
     end
 end
 
 init()
-floor()
+build();
