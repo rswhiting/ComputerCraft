@@ -10,8 +10,8 @@ function remaining(name)
 	if(packMap[name]) then
 		local count = 0;
         frontLoad(name);
-		if(turtle.getItemCount(packMap[name][firstSlot]) < 64) then
-           count = turtle.getItemCount(packMap[name][firstSlot]);
+		if(turtle.getItemCount(packMap[name][1]) < 64) then
+           count = turtle.getItemCount(packMap[name][1]);
         else
             for i = 1, #(packMap[name]) do
                 count = count + turtle.getItemCount(packMap[name][i])
