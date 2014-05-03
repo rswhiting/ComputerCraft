@@ -70,7 +70,7 @@ function placeCap()
     location.t(); -- turn to face start
     pack.select("stair");
     turtle.placeUp();
-    location.f();
+    location.f(1);
 end
 
 function placePillar()
@@ -103,7 +103,7 @@ function buildOne()
     for i=0,4 do
         placeBridge();
     end
-    location.b(5);
+    location.b(6);
     digOutArea();
     placeCap();
     placePillar();
