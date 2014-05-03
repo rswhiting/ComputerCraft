@@ -60,7 +60,7 @@ function select(name)
                         firstSlot = i;
                     else
 					    turtle.select(packMap[name][i]);
-                        turtle.transferTo(firstSlot);
+                        turtle.transferTo(packMap[name][firstSlot]);
                     end
 				end
 			end
