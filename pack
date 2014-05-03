@@ -51,14 +51,20 @@ function dropAll()
 end
 
 function select(name)
+    local firstSlot;
 	if(packMap[name]) then
 		if(remaining(name)) then
 			for i = 1, #(packMap[name]) do
 				if (turtle.getItemCount(packMap[name][i]) > 0) then
-					print("found " .. name .. " in block " .. packMap[name][i])
-					turtle.select(packMap[name][i])
+                    if(firstSlot == nil) then
+                        firstSlot = i;
+                    else
+					    turtle.select(packMap[name][i]);
+                        turtle.transferTo(firstSlot);
+                    end
 				end
 			end
+			turtle.select(packMap[name][firstSlot]);
 		else
 			print("Out of " .. name)
 		end
