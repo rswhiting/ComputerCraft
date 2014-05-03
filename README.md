@@ -21,5 +21,5 @@ https://github.com/rswhiting/ComputerCraft/wiki
 
 Alternately, grab the github program with defaults (beta, paste available until May 4):
 ```
-pastebin get 7kSExRpP github
+pastebin get aWYcspLZ github
 ```
