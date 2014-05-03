@@ -2,7 +2,7 @@
 os.loadAPI("location")
 os.loadAPI("pack")
 
-height = 12
+height = 23
 
 function init()
     pack.define("stair",{1,2,3})
@@ -12,15 +12,13 @@ end
 
 function placeBridge()
     turtle.digDown();
+    location.d(1);
+    turtle.digDown();
     pack.select("stone");
     turtle.placeDown();
-    while turtle.detectUp() do
-        turtle.digUp();
-    end
     location.u(1);
     pack.select("rail");
     turtle.placeDown();
-    location.d(1);
     while turtle.detect() do
         turtle.dig();
     end
@@ -33,7 +31,7 @@ function digOutArea()
         location.d(1);
         turtle.digDown();
     end
-    for i=0,5 do
+    for i=0,4 do
         while turtle.detect() do
             turtle.dig();
         end
@@ -50,7 +48,7 @@ function placeCap()
     location.t(); -- turn to face start
     pack.select("stair");
     turtle.placeUp();
-    for i=0,3 do
+    for i=0,2 do
         location.f(1);
         pack.select("stone");
         turtle.placeUp();
@@ -76,11 +74,12 @@ function placeCap()
 end
 
 function placePillar()
-    for i=0,(height-4) do 
+    local pillarHeight = height - 4;
+    for i=0,pillarHeight do 
         turtle.digDown();
         location.d(1);
     end
-    for i=0,(height-4) do
+    for i=0,pillarHeight do
         location.u(1);
         pack.select("stone");
         turtle.placeDown();
@@ -93,20 +92,24 @@ function finish()
     pack.select("stone");
     turtle.place();
     location.b(2);
-    location.u(4);
+    location.u(5);
 end
 
 function buildOne()
-    for i=0,2 do
+    for i=0,1 do
         placeBridge();
     end
+    location.f(1);
+    for i=0,4 do
+        placeBridge();
+    end
+    location.b(5);
     digOutArea();
     placeCap();
     placePillar();
     finish();
-    for i=0,6 do
-        placeBridge();
-    end
+    placeBridge();
+    location.f(5);
 end
 
 function checkSupply()
