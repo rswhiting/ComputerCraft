@@ -1,13 +1,8 @@
 
 local function printUsage()
-	print( "Usages:" )
-	print( "github USER REPO SOURCE DEST")
-end
-
-local tArgs = { ... }
-if #tArgs < 4 then
-	printUsage()
-  	return
+	print( "Usages:" );
+	print( "github USER REPO SOURCE DEST");
+    print( "github" );
 end
 
 if not http then
@@ -16,36 +11,56 @@ if not http then
 	return
 end
 
--- Determine file to download
-local sUser = textutils.urlEncode( tArgs[1] )
-local sRepo = textutils.urlEncode( tArgs[2] )
-local sSource = textutils.urlEncode( tArgs[3] )
-local sDest = tArgs[4]
+local tArgs = { ... }
+local sUser = "rswhiting";
+local sRepo = "ComputerCraft";
+local sSource = "update";
+local sDest = "update";
 local sPath = shell.resolve( sDest )
-if fs.exists( sPath ) then
-    print( "File already exists" )
-    return
+
+if #tArgs == 0 then
+    print("getting update script");
+    gitStuff(sUser,sRepo,sSource,sDest,sPath);
+    print("updating system");
+    shell.run("update");
+elseif #tArgs < 4 then
+	printUsage()
+  	return
+else
+    sUser = textutils.urlEncode( tArgs[1] )
+    sRepo = textutils.urlEncode( tArgs[2] )
+    sSource = textutils.urlEncode( tArgs[3] )
+    sDest = tArgs[4]
+    sPath = shell.resolve( sDest )
+    gitStuff(sUser,sRepo,sSource,sDest,sPath);
 end
 
--- GET the contents from github
-write( "Connecting to github.com... " )
-local request = "https://raw.github.com/"..sUser.."/"..sRepo.."/master/"..sSource
-print("requesting "..request)
-local response = http.get(request)
-    
-if response then
-    print( "Success." )
-    
-    local sResponse = response.readAll()
-    response.close()
-    
-    local file = fs.open( sPath, "w" )
-    file.write( sResponse )
-    file.close()
-    
-    print( "Downloaded as "..sDest )
-    
-else
-    print( "Failed." )
-end	
+function gitStuff(sUser, sRepo, sSource, sDest, sPath)
+    if fs.exists( sPath ) then
+        print( "File already exists" )
+        return
+    end
+
+    -- GET the contents from github
+    write( "Connecting to github.com... " )
+    local request = "https://raw.github.com/"..sUser.."/"..sRepo.."/master/"..sSource
+    print("requesting "..request)
+    local response = http.get(request)
+        
+    if response then
+        print( "Success." )
+        
+        local sResponse = response.readAll()
+        response.close()
+        
+        local file = fs.open( sPath, "w" )
+        file.write( sResponse )
+        file.close()
+        
+        print( "Downloaded as "..sDest )
+        
+    else
+        print( "Failed." )
+    end
+end
 
