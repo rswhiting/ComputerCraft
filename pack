@@ -56,7 +56,7 @@ function frontLoad(name)
         for i = 2, #(packMap[name]) do
             if (turtle.getItemCount(packMap[name][i]) > 0) then
                 turtle.select(packMap[name][i]);
-                turtle.transferTo(packMap[name][firstSlot]);
+                turtle.transferTo(packMap[name][1]);
             end
         end
     end
