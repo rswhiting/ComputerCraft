@@ -7,6 +7,7 @@ function define(name, indexArray)
 end
 
 function remaining(name)
+    print("in remaining()");
 	if(packMap[name]) then
 		local count = 0;
         frontLoad(name);
@@ -52,6 +53,7 @@ function dropAll()
 end
 
 function frontLoad(name)
+    print("in frontLoad()");
 	if(packMap[name]) then
         for i = 2, #(packMap[name]) do
             if (turtle.getItemCount(packMap[name][i]) > 0) then
@@ -63,13 +65,13 @@ function frontLoad(name)
 end
 
 function select(name)
-    local firstSlot = 1;
+    print("in select()");
 	if(packMap[name]) then
-		if(turtle.getItemCount(packMap[name][firstSlot]) > 1) then
-			if (turtle.getItemCount(packMap[name][firstSlot]) < 3) then
+		if(turtle.getItemCount(packMap[name][1]) > 1) then
+			if (turtle.getItemCount(packMap[name][1]) < 3) then
                 frontLoad(name);
             end
-			turtle.select(packMap[name][firstSlot]);
+			turtle.select(packMap[name][1]);
 		else
 			print("Out of " .. name)
 		end
