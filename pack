@@ -54,7 +54,7 @@ function select(name)
     local firstSlot = 1;
 	if(packMap[name]) then
 		if(turtle.getItemCount(packMap[name][firstSlot]) > 1) then
-			if (turtle.getItemCount(packMap[name][firstSlot]) < 2) then
+			if (turtle.getItemCount(packMap[name][firstSlot]) < 3) then
                 for i = 2, #(packMap[name]) do
                     if (turtle.getItemCount(packMap[name][i]) > 0) then
                         turtle.select(packMap[name][i]);
