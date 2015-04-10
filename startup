@@ -1,6 +1,6 @@
 -- get github program
-pastebin get jCQg9nEq github
+shell.run("pastebin get jCQg9nEq github")
 -- get rswhiting ComputerCraft update program
-github rswhiting ComputerCraft update update
+shell.run("github rswhiting ComputerCraft update update")
 -- get the latest stuff
-update
+shell.run("update")
