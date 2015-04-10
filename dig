@@ -66,7 +66,7 @@ function dig()
                     location.goto("home")
                 end
                 location.f(1)
-                where()
+                location.where()
             end
             if evenRow then
             --if h % 2 == 0 then
@@ -96,10 +96,10 @@ function dig()
                 end
             end
             evenRow = not evenRow
-            where()
+            location.where()
         end
         goingUp = not goingUp
-        where()
+        location.where()
     end
 end
 
