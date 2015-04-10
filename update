@@ -1,5 +1,6 @@
 -- updates files from github
 local files = {
+    "excavate",
     "location",
     "pack",
     "dig",
