@@ -159,7 +159,7 @@ local function tryDown()
 	end
     
     if maxDepth ~= nil then
-        if depth + 1 > maxDepth then
+        if depth + 1 >= maxDepth then
             return false
         end
     end

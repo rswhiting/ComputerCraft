@@ -1,0 +1,56 @@
+-- build a tower n floors high
+
+os.loadAPI("location")
+os.loadAPI("pack")
+
+function digBasement()
+    print("Digging the basement")
+    shell.run("excavate 12 4")
+    location.d(4) -- move down to start floor
+    print("Dug the basement!")
+end
+
+function placeFloor()
+    print("Placing the floor")
+    pack.select("floor");
+    location.u(1); -- up 1 from start location
+    local evenRow = false
+    for x=1,12 do
+        turtle.placeDown();
+        for y=1,11 do
+            location.f(1);
+            turtle.placeDown();
+        end
+        if evenRow then
+            location.r()
+            location.f(1)
+            location.r()
+        else
+            location.l()
+            location.f(1)
+            location.l()
+        end
+    end
+    -- return to start
+    print("Floor placed")
+end
+
+-- dig basement (4 deep)
+digBasement()
+
+-- place floor (12x12)
+placeFloor()
+
+-- build basement walls (3 high, no windows)
+
+-- place floor
+
+-- build main walls (door and windows)
+
+-- build floor
+
+-- build n floor
+
+-- build n walls (windows)
+
+-- build n+1 ceiling
