@@ -11,8 +11,9 @@ if size < 1 then
 	return
 end
 -- get maxDepth if it exists
-if #tArgs == 2
+if #tArgs == 2 then
     local maxDepth = tonumber( tArgs[2] )
+end
 	
 local depth = 0
 local unloaded = 0
