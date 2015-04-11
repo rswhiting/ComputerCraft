@@ -21,7 +21,7 @@ end
 function placeFloor()
     print("Placing the floor")
     location.u(1); -- up 1 from start location
-    local evenRow = false
+    local oddRow = false
     for x=1,12 do
         pack.select("floor");
         turtle.placeDown();
@@ -30,7 +30,7 @@ function placeFloor()
             pack.select("floor");
             turtle.placeDown();
         end
-        if evenRow then
+        if oddRow then
             location.r()
             location.f(1)
             location.r()
@@ -39,7 +39,7 @@ function placeFloor()
             location.f(1)
             location.l()
         end
-        evenRow = not evenRow;
+        oddRow = not oddRow;
     end
     -- return to start
     print("Floor placed")
