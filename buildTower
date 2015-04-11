@@ -21,7 +21,7 @@ end
 function placeFloor()
     print("Placing the floor")
     location.u(1); -- up 1 from start location
-    local oddRow = false
+    local oddRow = true
     for x=1,12 do
         pack.select("floor");
         turtle.placeDown();
