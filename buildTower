@@ -14,7 +14,6 @@ end
 function digBasement()
     print("Digging the basement")
     shell.run("excavate 12 5")
-    location.d(4) -- move down to start floor
     print("Dug the basement!")
 end
 
@@ -30,21 +29,22 @@ function placeFloor()
             pack.select("floor");
             turtle.placeDown();
         end
-        if oddRow then
-            location.r()
-            location.f(1)
-            location.r()
-        else
-            location.l()
-            location.f(1)
-            location.l()
+        if(x < 12) then
+            if oddRow then
+                location.r()
+                location.f(1)
+                location.r()
+            else
+                location.l()
+                location.f(1)
+                location.l()
+            end
         end
         oddRow = not oddRow;
     end
     -- return to start
-    location.l()
-    location.f(11)
     location.r()
+    location.f(11)
     print("Floor placed")
 end
 
@@ -89,7 +89,10 @@ end
 
 function buildTower()
     -- dig basement (4 deep)
-    --digBasement()
+    digBasement()
+    print("Please supply wall material in slots 1-8 and floor materials in 9-16")
+    io.read()
+    location.d(4) -- move down to start floor
 
     -- place floor (12x12)
     placeFloor()
