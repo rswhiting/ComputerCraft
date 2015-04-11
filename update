@@ -7,7 +7,8 @@ local files = {
     "buildPillar",
     "buildFloor",
     "bucketWater",
-    "buildTrain"
+    "buildTrain",
+    "buildTower"
 }
 
 print("Updating files from github")
