@@ -20,13 +20,14 @@ end
 
 function placeFloor()
     print("Placing the floor")
-    pack.select("floor");
     location.u(1); -- up 1 from start location
     local evenRow = false
     for x=1,12 do
+        pack.select("floor");
         turtle.placeDown();
         for y=1,11 do
             location.f(1);
+            pack.select("floor");
             turtle.placeDown();
         end
         if evenRow then
@@ -38,6 +39,7 @@ function placeFloor()
             location.f(1)
             location.l()
         end
+        evenRow = not evenRow;
     end
     -- return to start
     print("Floor placed")
@@ -45,11 +47,11 @@ end
 
 function placeFullWall()
     print("Placing full wall")
-    pack.select("wall");
     location.u(1); -- up 1 from start location
     for x=1,4 do
         for y=1,11 do
             location.f(1);
+            pack.select("wall");
             turtle.placeDown();
         end
         location.r();
@@ -63,14 +65,19 @@ function placeWindowWall()
     location.u(1); -- up 1 from start location
     for x=1,4 do
         location.f(1);
+        pack.select("wall");
         turtle.placeDown();
         location.f(3);
+        pack.select("wall");
         turtle.placeDown();
         location.f(3);
+        pack.select("wall");
         turtle.placeDown();
         location.f(3);
+        pack.select("wall");
         turtle.placeDown();
         location.f(1);
+        pack.select("wall");
         turtle.placeDown();
         location.r();
     end
