@@ -2,10 +2,16 @@
 
 os.loadAPI("location")
 os.loadAPI("pack")
+maxFloors = 1
+
+function init()
+    print("How many floors total? ")
+    maxFloors = tonumber(io.read())
+end
 
 function digBasement()
     print("Digging the basement")
-    shell.run("excavate 12 4")
+    shell.run("excavate 12 5")
     location.d(4) -- move down to start floor
     print("Dug the basement!")
 end
@@ -35,22 +41,78 @@ function placeFloor()
     print("Floor placed")
 end
 
--- dig basement (4 deep)
-digBasement()
+function placeFullWall()
+    print("Placing full wall")
+    pack.select("wall");
+    location.u(1); -- up 1 from start location
+    for x=1,4 do
+        for y=1,11 do
+            location.f(1);
+            turtle.placeDown();
+        end
+        location.r();
+    end
+    print("Full wall placed");
+end
 
--- place floor (12x12)
-placeFloor()
+function placeWindowWall()
+    print("Placing window wall")
+    pack.select("wall");
+    location.u(1); -- up 1 from start location
+    for x=1,4 do
+        location.f(1);
+        turtle.placeDown();
+        location.f(3);
+        turtle.placeDown();
+        location.f(3);
+        turtle.placeDown();
+        location.f(3);
+        turtle.placeDown();
+        location.f(1);
+        turtle.placeDown();
+        location.r();
+    end
+    print("Window wall placed");
+end
 
--- build basement walls (3 high, no windows)
+function buildTower()
+    -- dig basement (4 deep)
+    digBasement()
 
--- place floor
+    -- place floor (12x12)
+    placeFloor()
 
--- build main walls (door and windows)
+    -- build basement walls (3 high, no windows)
+    placeFullWall()
+    placeFullWall()
+    placeFullWall()
 
--- build floor
+    -- place floor
+    placeFloor()
+    -- TODO reload
 
--- build n floor
+    -- build main walls (door and windows)
+    placeFullWall()
+    placeWindowWall()
+    placeWindowWall()
+    placeFullWall()
 
--- build n walls (windows)
+    -- build floor
+    placeFloor()
+    -- TODO reload
 
--- build n+1 ceiling
+    for x=1,numFloors do
+        -- build n walls (windows)
+        placeFullWall()
+        placeWindowWall()
+        placeWindowWall()
+        
+        -- build n ceiling
+        placeFloor()
+        
+        -- TODO reload
+    end
+end
+
+init()
+buildTower()
