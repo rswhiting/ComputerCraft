@@ -42,6 +42,9 @@ function placeFloor()
         oddRow = not oddRow;
     end
     -- return to start
+    location.l()
+    location.f(11)
+    location.r()
     print("Floor placed")
 end
 
@@ -86,7 +89,7 @@ end
 
 function buildTower()
     -- dig basement (4 deep)
-    digBasement()
+    --digBasement()
 
     -- place floor (12x12)
     placeFloor()
