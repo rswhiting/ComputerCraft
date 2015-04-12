@@ -1,0 +1,95 @@
+os.loadAPI("location")
+os.loadAPI("pack")
+
+function init()
+    pack.define("road",{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16})
+end
+
+function digAndPlace()
+    turtle.digUp()
+    turtle.digDown()
+    pack.select("road")
+    turtle.placeDown()
+end
+
+function placeRoadBlock(last)
+    digAndPlace()
+    location.r()
+    turtle.dig()
+    location.f(1)
+    location.l()
+    digAndPlace()
+    turtle.dig()
+    location.f(1)
+    location.l()
+    digAndPlace()
+    turtle.dig()
+    location.f(1)
+    location.r()
+    digAndPlace()
+    if not last then
+        turtle.dig()
+        location.f(1)
+    end
+end
+
+function placeRoad(dist)
+    if dist % 2 ~= 0 then
+        print("Road distance needs to be even")
+        return
+    end
+    dist = dist / 2
+    for n=1,dist do
+        placeRoadBlock(n == dist)
+    end
+end
+
+function tunnel(dist)
+    for n=1,dist do
+        turtle.dig()
+        location.f(1)
+    end
+end
+
+function build()
+    local blockSides = 2
+    local dist = blockSides * 2 + 2
+    local block = 16
+    
+    -- first direction
+    placeRoad(dist)
+    location.r()
+    tunnel(block+1) -- one block plus 1
+    location.r()
+    placeRoad(dist)
+    location.l()
+    tunnel(block-1) -- one block minus 1
+    location.l()
+    placeRoad(dist-1)
+    
+    -- second direction
+    location.l()
+    turtle.dig()
+    location.f(1)
+    placeRoad(dist-4)
+    location.f(1)
+    location.l()
+    location.f(block-1)
+    location.l()
+    turtle.dig()
+    location.f(1)
+    placeRoad(dist-4)
+    location.f(1)
+    location.r()
+    location.f(block)
+    location.r()
+    turtle.dig()
+    location.f(1)
+    placeRoad(dist-4)
+    
+    print("Road complete")
+end
+
+
+init()
+build()

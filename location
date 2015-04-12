@@ -11,8 +11,8 @@ place = {}
 
 function init()
 	term.clear()
-    print("Set location? (y/n)")
-    local setOption = io.read()
+    --print("Set location? (y/n)")
+    local setOption = 'n' --io.read()
     if(setOption == 'y' or setOption == 'Y') then
         print("Initializing turtle location")
         print("x: ")

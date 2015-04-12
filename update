@@ -8,7 +8,8 @@ local files = {
     "buildFloor",
     "bucketWater",
     "buildTrain",
-    "buildTower"
+    "buildTower",
+    "buildCityRoads"
 }
 
 print("Updating files from github")
