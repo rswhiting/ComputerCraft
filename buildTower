@@ -45,6 +45,7 @@ function placeFloor()
     -- return to start
     location.r()
     location.f(11)
+    location.r()
     print("Floor placed")
 end
 
