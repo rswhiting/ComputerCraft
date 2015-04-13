@@ -117,7 +117,7 @@ function buildTower()
     placeFloor()
     -- TODO reload
 
-    for x=1,numFloors do
+    for x=1,maxFloors do
         -- build n walls (windows)
         placeFullWall()
         placeWindowWall()
