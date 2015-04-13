@@ -54,7 +54,7 @@ end
 function build()
     local blockSides = 2
     local block = 16
-    local dist = block * blockSides * 2 + 2
+    local dist = block * blockSides
     
     -- first direction
     placeRoad(dist)
@@ -65,7 +65,7 @@ function build()
     location.l()
     tunnel(block-1) -- one block minus 1
     location.l()
-    placeRoad(dist-1)
+    placeRoad(dist)
     
     -- second direction
     location.l()
