@@ -54,7 +54,7 @@ end
 function build()
     local blockSides = 2
     local block = 16
-    local dist = block * blockSides
+    local dist = block * blockSides + 2
     
     -- first direction
     placeRoad(dist)
