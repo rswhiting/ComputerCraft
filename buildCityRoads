@@ -68,7 +68,7 @@ function build()
     placeRoad(dist)
     
     -- second direction
-    location.b()
+    location.b(1)
     location.l()
     turtle.dig()
     location.f(1)
