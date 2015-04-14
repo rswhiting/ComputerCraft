@@ -63,11 +63,11 @@ function build()
     -- first direction
     dig(dist)
     location.r()
-    tunnel(block+1) -- one block plus 1
+    tunnel(block+3) -- one block plus 1
     location.r()
     dig(dist)
     location.l()
-    tunnel(block-1) -- one block minus 1
+    tunnel(block-3) -- one block minus 1
     location.l()
     dig(dist)
     
