@@ -71,6 +71,7 @@ function select(name)
 			turtle.select(packMap[name][1]);
 		else
 			print("Out of " .. name)
+            io.read()
 		end
 	end
 end
