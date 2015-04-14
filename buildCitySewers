@@ -1,0 +1,100 @@
+os.loadAPI("location")
+os.loadAPI("pack")
+
+function init()
+    print("Put torches in the first 3 slots if you want them")
+    pack.define("torch",{1,2,3})
+end
+
+function digUpDown()
+    turtle.digUp()
+    turtle.digDown()
+end
+
+function digBlock(last)
+    location.r()
+    for n=1,4 then
+        digUpDown()
+        if n ~= 4 then
+            turtle.dig()
+            location.f(1)
+        end
+    end
+    location.d(1)
+    location.t()
+    for n=1,4 then
+        digUpDown()
+        if n ~= 4 then
+            turtle.dig()
+            location.f(1)
+        end
+    end
+    location.r()
+    location.u(1)
+    if not last then
+        turtle.dig()
+        location.f(1)
+    end
+end
+
+function dig(dist)
+    for n=1,dist do
+        digBlock(n == dist)
+    end
+end
+
+function tunnel(dist)
+    for n=1,dist do
+        turtle.dig()
+        location.f(1)
+    end
+end
+
+function build()
+    local blockSides = 2
+    local block = 16
+    local dist = block * blockSides + 4
+    -- setup
+    for n=1,3 then
+        turtle.digDown()
+        location.d(1)
+    end
+    
+    -- first direction
+    dig(dist)
+    location.r()
+    tunnel(block+1) -- one block plus 1
+    location.r()
+    dig(dist)
+    location.l()
+    tunnel(block-1) -- one block minus 1
+    location.l()
+    dig(dist)
+    
+    -- second direction
+    location.b(1)
+    location.l()
+    turtle.dig()
+    location.f(1)
+    dig(dist-4)
+    location.f(1)
+    location.l()
+    location.f(block-1)
+    location.l()
+    turtle.dig()
+    location.f(1)
+    dig(dist-4)
+    location.f(1)
+    location.r()
+    location.f(block+1)
+    location.r()
+    turtle.dig()
+    location.f(1)
+    dig(dist-4)
+    
+    print("Sewers complete")
+end
+
+
+init()
+build()
