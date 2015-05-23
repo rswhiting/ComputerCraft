@@ -7,7 +7,7 @@ end
 
 function go(n)
     count = 0
-    while(count < n)
+    while(count < n) do
         if(location.f(1)) then
             count = count + 1
         else
@@ -39,7 +39,7 @@ function harvest()
     go(3)
     location.l()
     go(1)
-    location.u()
+    location.t()
     pack.dropAllDown()
 end
 
