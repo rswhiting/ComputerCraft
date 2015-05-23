@@ -10,7 +10,8 @@ local files = {
     "buildTrain",
     "buildTower",
     "buildCityRoads",
-    "buildCitySewers"
+    "buildCitySewers",
+    "harvestMelons"
 }
 
 print("Updating files from github")
