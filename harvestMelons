@@ -1,0 +1,48 @@
+-- harvest a floor of melons in the TW2 factory tower
+os.loadAPI("location")
+os.loadAPI("pack")
+
+function init()
+end
+
+function go(n)
+    count = 0
+    while(count < n)
+        if(location.f(1)) then
+            count = count + 1
+        else
+            turtle.dig()
+            turtle.suck()
+        end
+    end
+end
+
+function harvest()
+    go(1)
+    location.l()
+    go(8)
+    location.r()
+    go(3)
+    location.r()
+    go(11)
+    location.l()
+    go(2)
+    location.l()
+    go(11)
+    location.r()
+    go(3)
+    location.r()
+    go(11)
+    location.r()
+    go(8)
+    location.r()
+    go(3)
+    location.l()
+    go(1)
+    location.u()
+    pack.dropAllDown()
+end
+
+while true do
+    harvest()
+end
