@@ -1,0 +1,18 @@
+-- kill animals for xp
+os.loadAPI("location")
+os.loadAPI("pack")
+
+
+function go(n)
+    turtle.attack()
+    turtle.attack()
+    turtle.attack()
+    turtle.suck()
+    location.t()
+    pack.dropAllDown()
+end
+
+
+while true do
+    go()
+end
